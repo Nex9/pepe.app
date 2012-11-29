@@ -11,3 +11,29 @@
   ],
   "libs": []
 }
+
+
+{
+  "devcssPath": "/application.css",
+  "devjsPath": "/application.js",
+
+  "cssPath": "/application.css",
+  "jsPath": "/application.js",
+
+  "public": "./public",
+
+  "paths": ["./app"],
+
+  "libs": [],
+
+  "dependencies": [
+    "es5-shimify", 
+    "json2ify", 
+    "jqueryify", 
+    "spine",
+    "spine/lib/local",
+    "spine/lib/ajax",
+    "spine/lib/route",
+    "spine/lib/manager"
+  ]
+}

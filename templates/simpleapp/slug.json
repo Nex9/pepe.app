@@ -1,13 +1,17 @@
 {
+  "devcssPath": "/{{ name }}.css",
+  "devjsPath": "/forms.js",
+
+  "cssPath": "/{{ name }}.css",
+  "jsPath": "/{{ name }}.js",
+
+  "public": "./public",
+
+  "paths": ["./app"],
+
+  "libs": [],
+
   "dependencies": [
-    "es5-shimify", 
-    "json2ify", 
-    "jqueryify", 
-    "spine",
-    "spine/lib/local",
-    "spine/lib/ajax",
-    "spine/lib/route",
-    "spine/lib/manager"
-  ],
-  "libs": []
+  	"spine"
+  ]
 }

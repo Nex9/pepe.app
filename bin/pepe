@@ -21,11 +21,13 @@ var camelize = function(str){
 };
 
 var help = [
-    "usage: spine [options] ",
+    "usage: pepe [options] ",
     "",
-    "Generates a spine app using the specified command-line options",
+    "Generates a template apps using the specified command-line options",
     "",
     "options:",
+    " tenant path       Generates a new imageapp tenant skeleton", 
+    " simpleapp path    Generates a new minimal Spine app",
     " app path          Generates a new Spine application",
     " mobile path       Generates a new Spine Mobile application",
     " controller name   Generates a Spine Controller",
@@ -33,6 +35,17 @@ var help = [
 ].join('\n');
 
 var generators = {};
+
+generators.simpleapp = generators.new = function(){
+  var template = __dirname + "/../templates/simpleapp";
+  var path     = fd.normalize(argv[1]);
+  
+  // Create parent dir
+  if (fd.existsSync(path)) throw(path + " already exists");
+  fs.mkdirSync(path, 0775);
+  
+  (new Template(template, path)).write();
+};
 
 generators.app = generators.new = function(){
   var template = __dirname + "/../templates/app";
