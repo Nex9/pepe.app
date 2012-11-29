@@ -1,6 +1,6 @@
 {
-  "devcssPath": "/application.css",
-  "devjsPath": "/application.js",
+  "devCssPath": "/application.css",
+  "devJsPath": "/application.js",
 
   "cssPath": "/application.css",
   "jsPath": "/application.js",
