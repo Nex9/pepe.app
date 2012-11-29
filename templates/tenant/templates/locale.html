@@ -1,0 +1,19 @@
+
+
+<div>
+	{% if handler.site_languages %}
+
+		{% set splitted_path = handler.path.lstrip('/').split('/') %}
+		{% if len(splitted_path[0]) == 2  %}
+			{% set path = '/'.join(splitted_path[1:]) %}
+		{% else %}
+			{% set path = '/'.join(splitted_path) %}
+		{% end %}
+
+		{% set langlength = len(handler.site_languages) %}
+		{% for n, lang in enumerate(handler.site_languages) %}
+			<span><a href="/{{ lang }}/{{ path }}">{{ lang }}</a></span>
+			{% if n+1 != langlength %} | {% end %}			
+		{% end %}
+	{% end %}
+</div>

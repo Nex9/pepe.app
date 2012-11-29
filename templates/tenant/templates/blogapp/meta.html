@@ -1,0 +1,64 @@
+{% block header %}
+
+    <meta name="description" content="{{ handler.preferences.preferences.get('app').get('site_description') }}">
+    <meta name="keywords" content="{{ handler.preferences.preferences.get('app').get('site_keywords') }}">
+    <meta name="author" content="{{ handler.preferences.preferences.get('app').get('site_title') }}">
+
+    <meta name="robots" content="index, follow">
+
+    {% if permalinkpage %}
+        {% for entry in entries %}
+
+            <meta name="description" content="{{ entry.get_text(entry.body) }}">
+            <meta name="keywords" content="{{ ', '.join(entry.tags) }}">
+            <meta name="author" content="Connected Ventures LLC. Copyright 1999-2010.">
+
+            <meta property="og:title" content="{{ entry.Title }}">
+            <meta property="og:description" content="{{ entry.get_text(entry.body) }}">
+            <meta property="og:site_name" content="{{ handler.preferences.preferences.get('app').get('site_title') }}">
+
+            {% if entry.type == 'text' %}
+
+            {% elif entry.type == 'photo' %}
+                {% set img = entry.thumbnail(960, 720) %}
+                {% if img %}
+                    <meta name="medium" content="image">
+
+                    <meta property="og:type" content="image">
+                    <meta property="og:image" content="{{ img.get('url') }}">
+                    <meta property="og:image:width" content="{{ img.get('width') }}">
+                    <meta property="og:image:height" content="{{ img.get('height') }}">
+                {% end %}
+
+            {% elif entry.type == 'video' %}
+
+                <meta name="medium" content="video">
+                <meta property="og:type" content="video">
+                <meta property="og:video:tag" content="{{ ', '.join(entry.tags) }}">
+
+                {% if handler.re.search("[0-9a-z]{56}", entry.video) %}
+                    {% set video = entry.thumbnail(2000, 480) %}
+                    {% if video %}
+                        <meta property="og:image" content="{{ video.get('url') }}">
+                        <meta property="og:video" content="/assets/api/play_redirect?uuid={{ video.get('uuid') }}&codec=h264&quality=sd">
+                        <meta property="og:video:type" content="video/mp4">
+                        <meta property="og:video:width" content="{{ video.get('width') }}">
+                        <meta property="og:video:height" content="{{ video.get('width') }}">
+                    {% end %}
+
+
+                {% elif entry.video.__contains__('vimeo') %}
+
+                    {% set m = handler.re.search("\d+", entry.video)%}
+                    <meta property="og:video" content="http://vimeo.com/moogaloop.swf?clip_id={{ m.group(0) }}&amp;server=vimeo.com&amp;show_title=1&amp;show_byline=1&amp;show_portrait=1&amp;color=00ADEF&amp;fullscreen=1&amp;autoplay=0&amp;loop=0">
+                    <meta property="og:video:type" content="application/x-shockwave-flash" />
+
+                {% elif entry.video.__contains__('youtu')%}
+
+                {% end %}
+
+
+            {% end %}
+        {% end %}
+    {% end %}
+{% end %}

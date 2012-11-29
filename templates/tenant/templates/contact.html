@@ -1,0 +1,47 @@
+{% autoescape None %}
+{% extends "base.html" %}
+
+{% block js %}
+<script src="/static/js/jquery.validate.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+    jQuery.validator.messages.required = "";
+    $(document).ready(function(){
+        $('#contact').validate();
+    });
+</script>
+{% end %}
+
+
+{% block content %}
+
+<form method="POST" action="{{ handler.url }}" id="contact">
+
+    {{ xsrf_form_html() }}
+    <div class="field nex">
+        <label for="name">Name</label>
+        <input class="required" type="text" name="name" value="" id="name" />
+    </div>
+
+    <div class="field nex">
+        <label for="email">Email</label>
+        <input class="required email" type="text" name="email" value="" id="email" />
+    </div>
+
+    <div class="field nex">
+        <label for="message">Message</label>
+        <textarea class="required" name="message" rows="8" cols="40" id="message"></textarea>
+    </div>
+
+    <div class="field nex">
+        <label for="subscribe">Keep me updated</label>
+        <input type="checkbox" name="subscribe" value="subscribe" id="subscribe" checked />
+    </div>
+
+    <div class="form-controls">
+        <button class="button nex white out small">Send</button>
+    </div>
+
+</form>
+
+
+{% end %}

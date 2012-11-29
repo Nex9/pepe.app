@@ -1,9 +1,9 @@
 {
-  "devcssPath": "/{{ name }}.css",
-  "devjsPath": "/forms.js",
+  "devcssPath": "/application.css",
+  "devjsPath": "/application.js",
 
-  "cssPath": "/{{ name }}.css",
-  "jsPath": "/{{ name }}.js",
+  "cssPath": "/application.css",
+  "jsPath": "/application.js",
 
   "public": "./public",
 

@@ -1,0 +1,10 @@
+<div class="clear"></div>
+
+<div id="pager">
+    {% if previous %}
+        <a href="{{ modules.PageLinkModule(handler, direction='previous') }}" class="prev">previous</a>
+    {% end %}
+    {% if next %}
+        <a href="{{ modules.PageLinkModule(handler, direction='next') }}" class="next">next</a>
+    {% end %}
+</div>

@@ -1,0 +1,116 @@
+{% set date_format = " %B %d %Y" %}
+
+{% set lang = handler.lang %}
+
+{% for entry in entries %}
+
+    {% set localed = entry.get_lang(lang) %}
+
+    {% if handler.site_languages %}
+        {% set entry.uri = '/'.join([localed.lang, handler.prefixes.get('blog').lstrip('/'), 'post', str(entry.id), localed.slug]) %}
+    {% else %}
+        {% set entry.uri = '/'.join([handler.prefixes.get('blog').lstrip('/'), 'post', str(entry.id), entry.slug]) %}
+    {% end %}
+
+    {% if entry.type == 'text' %}
+        <li class="entry text">
+        
+            <div class="date">
+                <a href="/{{ entry.uri.lstrip('/') }}">{{ entry.pub_date.strftime(date_format) }}</a>
+            </div>
+        
+            <h2>
+                <a href="/{{ entry.uri.lstrip('/') }}">{{ localed.title }}</a>
+            </h2>
+
+            <div class="body-text">{{ entry.get_html(localed.body) }}</div>
+        
+    {% end %}
+
+
+
+    {% if entry.type == 'photo' %}
+        <li class="entry photo">
+            
+            {% if entry.photo %}
+
+                {% if entry.gallery %}
+                        
+                    {% if entry.photo.startswith('http://') %}
+                    
+                        <a href="/{{ entry.path }}">
+                            <img src="{{ entry.photo }}">
+                        </a>
+                    
+                    {% elif entry.asset %}
+
+                        <a href="/{{ entry.path }}">
+                            {% set img = entry.asset.thumbnail(480, 900) %}
+                            <img src="{{ img.get('url') }}" height="{{ img.get('height') }}" width="{{ img.get('width') }}">
+                        </a>
+
+                    {% end %}                    
+        
+                {% else %}
+        
+                    {% if entry.photo.startswith('http://') %}
+                    
+                        <img src="{{ entry.photo }}">
+                    
+                    {% elif entry.asset %}
+
+                        {% set img = entry.asset.thumbnail(480, 900) %}
+                        <img src="{{ img.get('url') }}" height="{{ img.get('height') }}" width="{{ img.get('width') }}">
+
+                    {% end %}
+         
+                {% end %}
+
+            {% end %}
+
+
+            
+            <h2>{{ localed.title }}</h2>
+    
+            {{ entry.get_html(localed.body) }}
+
+    {% end %}
+
+
+
+    {% if entry.type == 'video' %}
+        <li class="entry video">
+            
+            <video controls="controls" poster="/assets/{{ entry.video }}/480" class="{{ entry.video }}" width="480">
+
+
+                <source src="/assets/api/play_redirect?uuid={{ entry.video }}&codec=h264&quality=sd"
+                        type="video/mp4"
+                        media='only screen and (max-device-width: 480px)'>
+                <source src="/assets/api/play_redirect?uuid={{ entry.video }}&codec=h264&quality=hd"
+                        type="video/mp4">
+                <source src="/assets/api/play_redirect?uuid={{ entry.video }}&codec=vp8&quality=sd"
+                        type="video/webm">
+                                  
+            </video>
+            
+            <h2>{{ localed.title }}</h2>
+        
+            {{ entry.get_html(localed.body) }}
+        
+    {% end %}
+
+            
+            {% if entry.tags %}
+                <ul class="entry-tags">
+                    {% for tag in entry.tag_pairs %}
+                    <li>
+                        <a href="{{ handler.prefixes.get('blog') }}/tags/{{ escape(tag[1]) }}" class="{{ escape(tag[1]).lower() }}">{{ escape(tag[0]) }}</a>
+                    </li>
+                    {% end %}
+                </ul>
+            {% end %}
+    
+        </li>
+
+{% end %}
