@@ -1,13 +1,13 @@
 {
-  "name": "spine.app",
-  "description": "Spine app generator",
-  "version": "0.3.3",
+  "name": "pepe.app",
+  "description": "Pepe app generator",
+  "version": "0.0.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/maccman/spine.app.git"
   },
-  "author": "Alex MacCaw <info@eribium.org>",
-  "bin": { "spine": "./bin/spine" },
+  "author": "Pepe",
+  "bin": { "pepe": "./bin/pepe" },
   "engines": {
     "node": "*"
   },
